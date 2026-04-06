@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function UploadForm({ addDocument }) {
   const [name, setName] = useState("");
-  const [type, setType] = useState("PDF");
+  const [type, setType] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ function UploadForm({ addDocument }) {
 
     addDocument(newDoc);
     setName("");
-    setType("PDF");
+    setType("");
   };
 
   return (
@@ -29,10 +29,11 @@ function UploadForm({ addDocument }) {
       />
 
       <select value={type} onChange={(e) => setType(e.target.value)}>
+        <option value="">Select a type</option> 
         <option value="Plans">Plans</option>
         <option value="Reports">Reports</option>
         <option value="Contracts">Contracts</option>
-        <option value="Invoices">Invoiices</option>
+        <option value="Invoices">Invoices</option>
         <option value="Statements">Statements</option>
         <option value="Drawings">Drawings</option>
         <option value="Proposals">Proposals</option>
