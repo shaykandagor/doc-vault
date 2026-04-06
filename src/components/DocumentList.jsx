@@ -1,7 +1,7 @@
 function DocumentList({ docs, deletedoc }) {
     return (
       <div>
-        <h2>docs</h2>
+        <h2>Documents</h2>
   
         {docs.length === 0 ? (
           <p>No docs yet</p>
