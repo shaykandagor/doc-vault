@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadForm from "./components/UploadForm";
 import DocumentList from "./components/DocumentList";
 
 function App() {
-  const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState(() => {
+    const storedDocuments = localStorage.getItem("documents");
+    return storedDocuments ? JSON.parse(storedDocuments) : [];
+  });
+
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const filterOptions = ["All", "Plans", "Reports", "Contracts", "Invoices", "Statements", "Drawings", "Proposals", "Other"];
-  
+
+  useEffect(() => {
+    localStorage.setItem("documents", JSON.stringify(documents));
+  }, [documents]);
+
   const handleSearch = (e) => {
     setSearch(e.target.value);
     setFilter("All");
@@ -19,7 +27,6 @@ function App() {
   const searchMatches = filterMatches.filter(doc => 
     doc.name.toLowerCase().includes(searchTerm) || doc.type.toLowerCase().includes(searchTerm)
   );
-
 
   const addDocument = (doc) => {
     setDocuments([...documents, doc]);
@@ -37,7 +44,8 @@ function App() {
         {filterOptions.map(option => (
         <button key={option} onClick={() => setFilter(option)}>{option}</button>
       ))}
-        <DocumentList docs={searchMatches} deletedoc={deleteDocument} />
+        <DocumentList docs={searchMatches} deletedoc={deleteDocument}  />
+
       </div>
   );
 }
