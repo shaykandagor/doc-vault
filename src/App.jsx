@@ -10,10 +10,16 @@ function App() {
   
   const handleSearch = (e) => {
     setSearch(e.target.value);
+    setFilter("All");
   }
-  const finalDocuments = documents.filter(doc => 
-    doc.name.toLowerCase().includes(search.toLowerCase()) && (filter === "All" || doc.type === filter)
+  const filterMatches = documents.filter(doc => 
+    (filter === "All" || doc.type === filter)
   );
+  const searchTerm = search.toLowerCase();
+  const searchMatches = filterMatches.filter(doc => 
+    doc.name.toLowerCase().includes(searchTerm) || doc.type.toLowerCase().includes(searchTerm)
+  );
+
 
   const addDocument = (doc) => {
     setDocuments([...documents, doc]);
@@ -31,7 +37,7 @@ function App() {
         {filterOptions.map(option => (
         <button key={option} onClick={() => setFilter(option)}>{option}</button>
       ))}
-        <DocumentList docs={finalDocuments} deletedoc={deleteDocument} />
+        <DocumentList docs={searchMatches} deletedoc={deleteDocument} />
       </div>
   );
 }
