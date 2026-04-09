@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UploadForm from "./components/UploadForm";
 import DocumentList from "./components/DocumentList";
+import "./App.css";
 
 function App() {
   const [documents, setDocuments] = useState(() => {
@@ -26,8 +27,8 @@ function App() {
   const searchTerm = search.toLowerCase();
   const searchMatches = filterMatches.filter(doc => 
     doc.name.toLowerCase().includes(searchTerm) || doc.type.toLowerCase().includes(searchTerm)
+    
   );
-
   const addDocument = (doc) => {
     setDocuments([...documents, doc]);
   };
@@ -37,14 +38,27 @@ function App() {
 
 
   return (
-    <div>
-      <h1>DocVault</h1>
-      <input type="text" placeholder="Search" value={search} onChange={handleSearch} />
+    <div clasName="app-container">
+      <h1 className="app-title">DocVault</h1>
+      <div className="app-heading-container">
+        <h1 className="app-heading">Document Dashboard</h1>
+        <input className="app-search-input" type="text" placeholder="Search documents..." value={search} onChange={handleSearch} />
+      </div>
+
+      <div className="app-upload-container">
+        <h2 className="document-upload-heading">Upload Document</h2>
         <UploadForm addDocument={addDocument} />
+      </div>
+
+      <div className="app-filter-container">
         {filterOptions.map(option => (
-        <button key={option} onClick={() => setFilter(option)}>{option}</button>
+        <button className="app-filter-button" key={option} onClick={() => setFilter(option)}>{option}</button>
       ))}
-        <DocumentList docs={searchMatches} deletedoc={deleteDocument}  />
+      </div >
+      <div className="app-document-list-container">
+        <DocumentList docs={searchMatches} deleteDoc={deleteDocument}  />
+      </div>
+     
 
       </div>
   );
