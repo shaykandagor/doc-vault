@@ -3,7 +3,9 @@ import { useState } from "react";
 function UploadForm({ addDocument }) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
-  const [uploadDate, setUploadDate] = useState(new Date().toLocaleDateString());
+  
+  const dateToday = new Date().toLocaleDateString().split("T")[0];
+  const [uploadDate, setUploadDate] = useState(dateToday);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,9 +19,10 @@ function UploadForm({ addDocument }) {
 
     addDocument(newDoc);
     setName("");
-    setType("");  
-    setUploadDate(new Date().toLocaleDateString()); // Reset the date to today's date
+    setType("");
+    setUploadDate(dateToday);
   };
+
 
   return (
     <form className="document-upload-form" onSubmit={handleSubmit}>
@@ -60,7 +63,8 @@ function UploadForm({ addDocument }) {
           <input
             id="date"
             className="document-upload-input-date"
-            type="date" defaultValue={new Date().toLocaleDateString()}
+            type="date"
+            value={uploadDate}
             onChange={(e) => setUploadDate(e.target.value)}
             required
             />

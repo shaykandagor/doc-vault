@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UploadForm from "./components/UploadForm";
 import DocumentList from "./components/DocumentList";
 import "./App.css";
+import { FaUpload } from "react-icons/fa";
 
 function App() {
   const [documents, setDocuments] = useState(() => {
@@ -27,26 +28,23 @@ function App() {
   const searchTerm = search.toLowerCase();
   const searchMatches = filterMatches.filter(doc => 
     doc.name.toLowerCase().includes(searchTerm) || doc.type.toLowerCase().includes(searchTerm)
-    
   );
+
   const addDocument = (doc) => {
     setDocuments([...documents, doc]);
   };
   const deleteDocument = (id) => {
     setDocuments(documents.filter(doc => doc.id !== id))
   }
-
-
   return (
     <div clasName="app-container">
-      <h1 className="app-title">DocVault</h1>
       <div className="app-heading-container">
-        <h1 className="app-heading">Document Dashboard</h1>
+        <h1 className="app-title">DocVault</h1>
         <input className="app-search-input" type="text" placeholder="Search documents..." value={search} onChange={handleSearch} />
       </div>
 
       <div className="app-upload-container">
-        <h2 className="document-upload-heading">Upload Document</h2>
+        <h2 className="document-upload-heading"><FaUpload /> Upload Document</h2>
         <UploadForm addDocument={addDocument} />
       </div>
 
